@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<!-- DASHBOARD CARD -->
+
+<div class="card" id="dashboard">
+
+<h2>SuperAdmin Dashboard</h2>
+
+<p>Total Users: {{ total }}</p>
+
+</div>
+
+
+
+<!-- CREATE USER CARD -->
+
+<div class="card">
+
+<h3>Create User</h3>
+
+<form method="POST" action="{{ url_for('add_user') }}">
+
+
+<input name="username"
+placeholder="Username"
+required>
+
+
+<input type="password"
+name="password"
+placeholder="Password"
+required>
+
+
+<select name="role">
+
+<option value="admin">Admin</option>
+
+<option value="employee">Employee</option>
+
+<option value="user">User</option>
+
+</select>
+
+
+<button type="submit" class="btn">
+
+Create
+
+</button>
+
+
+</form>
+
+</div>
+
+
+
+<!-- USER MANAGEMENT CARD -->
+
+<div class="card" id="manage-users">
+
+<h3>User Management</h3>
+
+
+<table>
+
+
+<tr>
+
+<th>ID</th>
+
+<th>Name</th>
+
+<th>Role</th>
+
+<th>Action</th>
+
+</tr>
+
+
+
+{% for user in users %}
+
+<tr>
+
+
+<td>{{ user[0] }}</td>
+
+
+<td>{{ user[1] }}</td>
+
+
+<td>{{ user[3] }}</td>
+
+
+<td>
+
+
+<!-- PROTECT CURRENT SUPERADMIN -->
+
+{% if user[0] == session["id"] %}
+
+<span style="color:blue; font-weight:bold;">
+
+Your Account
+
+</span>
+
+
+
+<!-- ALLOW DELETE -->
+
+{% else %}
+
+<a href="{{ url_for('delete', id=user[0]) }}"
+
+class="btn-danger"
+
+onclick="return confirm('Delete this user?')">
+
+Delete
+
+</a>
+
+{% endif %}
+
+
+</td>
+
+
+</tr>
+
+{% endfor %}
+
+
+</table>
+
+
+</div>
+
+
+
+{% endblock %}

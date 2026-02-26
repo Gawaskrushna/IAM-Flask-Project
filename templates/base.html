@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title> IAM</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+
+<h2>IAM</h2>
+
+
+<!-- USERNAME -->
+
+<p style="text-align:center; color:#cbd5e1; margin-bottom:20px;">
+
+{{ session.username }}
+
+</p>
+
+
+
+<!-- SUPERADMIN MENU -->
+
+{% if session.role == "superadmin" %}
+
+<a href="/superadmin#dashboard">Dashboard</a>
+
+<a href="/superadmin#manage-users">Manage Users</a>
+
+
+
+<!-- ADMIN MENU -->
+
+{% elif session.role == "admin" %}
+
+<a href="/admin#dashboard">Dashboard</a>
+
+<a href="/admin#manage-users">Manage Users</a>
+
+
+
+<!-- EMPLOYEE MENU -->
+
+{% elif session.role == "employee" %}
+
+<a href="/employee#dashboard">Dashboard</a>
+
+
+
+<!-- USER MENU -->
+
+{% elif session.role == "user" %}
+
+<a href="/user#dashboard">Dashboard</a>
+
+{% endif %}
+
+
+
+<!-- LOGOUT -->
+
+<a href="{{ url_for('logout') }}">Logout</a>
+
+
+</div>
+
+
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+
+Welcome {{ session.username }}
+
+
+<span style="float:right; font-weight:bold; text-transform:capitalize;">
+
+{{ session.role }}
+
+</span>
+
+
+</div>
+
+
+
+<!-- MAIN CONTENT -->
+
+<div class="main">
+
+
+{% block content %}
+
+{% endblock %}
+
+
+</div>
+
+
+
+</body>
+
+</html>
